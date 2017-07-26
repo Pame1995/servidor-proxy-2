@@ -1,5 +1,4 @@
-package proyecto2;
-
+package proyecto2; 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.TextArea;
@@ -171,56 +170,52 @@ public class cliente  extends JDialog {
 	}
 	private void mandarCorreo() {
 		  // El correo gmail de envío
-		  String correoEnvia = tfRemitente.getText();
-		  String claveCorreo = tfContrasenha.getText();
+		  String correoEnvia = tfRemitente.getText();     //recibe el remitente
+		  String claveCorreo = tfContrasenha.getText();     // recibe la contraseña 
 		  
 		  // La configuración para enviar correo
+		 
 		  Properties properties = new Properties();
 		 
-		  properties.put("mail.smtp.host", "smtp.gmail.com");
-		  properties.put("mail.smtp.port", "587");
+		  properties.put("mail.smtp.host", "smtp.gmail.com");  // establece el protocolo smtp, y el url 
+		  properties.put("mail.smtp.port", "587");				// establece como puerto el 587
 
-		  properties.put("mail.smtp.starttls.enable", "true");
-		  properties.put("mail.smtp.auth", "true");
-		  properties.put("mail.user", correoEnvia);
-		  properties.put("mail.password", claveCorreo);
+		  properties.put("mail.smtp.starttls.enable", "true");      //   
+		  properties.put("mail.smtp.auth", "true");  // se establece en true cuando es necesario https
+		  properties.put("mail.user", correoEnvia);  	// se establece el mail
+		  properties.put("mail.password", claveCorreo);   // se establece la contraseña
 		 
 		  // Obtener la sesion
 		  Session session = Session.getInstance(properties, null);
 		  int aviso = 0;
 		  try {
 		   // Crear el cuerpo del mensaje
-		   MimeMessage mimeMessage = new MimeMessage(session);
-		 
+		   MimeMessage mimeMessage = new MimeMessage(session);  //instancia objeto tipo MimeMessage que sirve 
+		   														// para capturar cabeceras de un mensaje
 		   // Agregar quien envía el correo
 		   mimeMessage.setFrom(new InternetAddress(correoEnvia));
-		    
 		   // Los destinatarios
 		   InternetAddress[] internetAddresses = {new InternetAddress(tfDestino.getText())};
 //		     new InternetAddress("correo2@gmail.com"),
 //		     new InternetAddress("correo3@gmail.com") };
 		 
 		   // Agregar los destinatarios al mensaje
-		   mimeMessage.setRecipients(Message.RecipientType.TO,
+		   mimeMessage.setRecipients(Message.RecipientType.TO,      
 		     internetAddresses);
 		 
 		   // Agregar el asunto al correo
-		   mimeMessage.setSubject(tfAsunto.getText());
+		   mimeMessage.setSubject(tfAsunto.getText());        //establece  el asunto
 		 
 		   // Creo la parte del mensaje
 		   MimeBodyPart mimeBodyPart = new MimeBodyPart();
 		   mimeBodyPart.setText(tfMensaje.getText());
 		 
-		   
-
 			// Crear el multipart para agregar la parte del mensaje anterior
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
 			
-		   
 		   // Agregar el multipart al cuerpo del mensaje
 		   mimeMessage.setContent(multipart);
-		 
 		   // Enviar el mensaje
 		   Transport transport = session.getTransport("smtp");
 		   transport.connect(correoEnvia, claveCorreo);
@@ -242,6 +237,7 @@ public class cliente  extends JDialog {
 	private void AbrirURLGmail() {
 		
 		String URL = "https://www.google.com/settings/security/lesssecureapps";
+		 // colocamos en este String la url de se desea navegar y lo que hace la aplicacion es abrirlo por default
 		try {
 			Desktop.getDesktop().browse(new URI(URL));
 		} catch (IOException e) {
